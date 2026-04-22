@@ -1,0 +1,15 @@
+[build]
+  # Tell Netlify where the React app lives
+  base = "SecureWealth-Project/frontend"
+  
+  # The command to build the production bundle
+  command = "npm run build"
+  
+  # The folder where the built files will be (relative to the base)
+  publish = "build"
+
+# This ensures that React Router works correctly on refresh
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
