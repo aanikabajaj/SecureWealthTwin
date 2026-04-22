@@ -8,9 +8,9 @@ from decimal import Decimal
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.repository_base import BaseRepository
-from backend.app.models.physical_asset import AssetCategory, PhysicalAsset
-from backend.app.models.networth_snapshot import NetWorthSnapshot
+from app.db.repository_base import BaseRepository
+from app.models.physical_asset import AssetCategory, PhysicalAsset
+from app.models.networth_snapshot import NetWorthSnapshot
 
 
 class PhysicalAssetRepository(BaseRepository[PhysicalAsset]):

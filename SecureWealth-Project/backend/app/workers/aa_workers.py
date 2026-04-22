@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 
 from celery import Celery
 
-from backend.app.config import get_settings
+from app.config import get_settings
 
 logger   = logging.getLogger(__name__)
 settings = get_settings()
@@ -33,11 +33,11 @@ celery_app.conf.update(
     worker_prefetch_multiplier=1,
     beat_schedule={
         "refresh-all-active-consents-daily": {
-            "task": "backend.app.workers.aa_workers.refresh_all_active_consents",
+            "task": "app.workers.aa_workers.refresh_all_active_consents",
             "schedule": 86400.0,
         },
         "expire-stale-consents-hourly": {
-            "task": "backend.app.workers.aa_workers.expire_stale_consents",
+            "task": "app.workers.aa_workers.expire_stale_consents",
             "schedule": 3600.0,
         },
     },
@@ -53,16 +53,16 @@ def _run_async(coro):
 
 
 @celery_app.task(
-    name="backend.app.workers.aa_workers.refresh_aa_data_for_user",
+    name="app.workers.aa_workers.refresh_aa_data_for_user",
     bind=True, max_retries=3, default_retry_delay=300,
 )
 def refresh_aa_data_for_user(self, user_id: str) -> dict:
     """Fetch fresh FI data from all FIPs for every ACTIVE consent of a user."""
     async def _run():
-        from backend.app.db.database import AsyncSessionLocal
-        from backend.app.models.aa_consent import ConsentStatus
-        from backend.app.repositories.aa_repository import AAConsentRepository
-        from backend.app.services.aa_service import AccountAggregatorService
+        from app.db.database import AsyncSessionLocal
+        from app.models.aa_consent import ConsentStatus
+        from app.repositories.aa_repository import AAConsentRepository
+        from app.services.aa_service import AccountAggregatorService
 
         uid            = uuid.UUID(user_id)
         fetched_count  = 0
@@ -97,13 +97,13 @@ def refresh_aa_data_for_user(self, user_id: str) -> dict:
         raise self.retry(exc=exc)
 
 
-@celery_app.task(name="backend.app.workers.aa_workers.refresh_all_active_consents", bind=True)
+@celery_app.task(name="app.workers.aa_workers.refresh_all_active_consents", bind=True)
 def refresh_all_active_consents(self) -> dict:
     """Periodic: enqueue per-user refresh for all users with active consents."""
     async def _run():
         from sqlalchemy import select
-        from backend.app.db.database import AsyncSessionLocal
-        from backend.app.models.aa_consent import AAConsent, ConsentStatus
+        from app.db.database import AsyncSessionLocal
+        from app.models.aa_consent import AAConsent, ConsentStatus
 
         async with AsyncSessionLocal() as db:
             stmt     = select(AAConsent.user_id).where(AAConsent.status == ConsentStatus.ACTIVE).distinct()
@@ -119,14 +119,14 @@ def refresh_all_active_consents(self) -> dict:
 
 
 @celery_app.task(
-    name="backend.app.workers.aa_workers.recompute_networth_for_user",
+    name="app.workers.aa_workers.recompute_networth_for_user",
     bind=True, max_retries=2, default_retry_delay=60,
 )
 def recompute_networth_for_user(self, user_id: str) -> dict:
     """Recompute and snapshot net worth for a user."""
     async def _run():
-        from backend.app.db.database import AsyncSessionLocal
-        from backend.app.services.asset_service import NetWorthService
+        from app.db.database import AsyncSessionLocal
+        from app.services.asset_service import NetWorthService
 
         uid = uuid.UUID(user_id)
         async with AsyncSessionLocal() as db:
@@ -147,13 +147,13 @@ def recompute_networth_for_user(self, user_id: str) -> dict:
         raise self.retry(exc=exc)
 
 
-@celery_app.task(name="backend.app.workers.aa_workers.expire_stale_consents")
+@celery_app.task(name="app.workers.aa_workers.expire_stale_consents")
 def expire_stale_consents() -> dict:
     """Periodic: mark consents past their expiry date as EXPIRED."""
     async def _run():
         from sqlalchemy import update
-        from backend.app.db.database import AsyncSessionLocal
-        from backend.app.models.aa_consent import AAConsent, ConsentStatus
+        from app.db.database import AsyncSessionLocal
+        from app.models.aa_consent import AAConsent, ConsentStatus
 
         now = datetime.now(timezone.utc)
         async with AsyncSessionLocal() as db:

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 from typing import List, Dict
 
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.user import User
-from backend.app.services.blockchain_service import blockchain_service
+from app.middleware.auth_middleware import get_current_user
+from app.models.user import User
+from app.services.blockchain_service import blockchain_service
 
 router = APIRouter()
 

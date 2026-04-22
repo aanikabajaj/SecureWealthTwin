@@ -9,7 +9,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 
-from backend.app.models.aa_consent import AccountType, ConsentStatus, FetchStatus
+from app.models.aa_consent import AccountType, ConsentStatus, FetchStatus
 
 
 class ConsentCreateRequest(BaseModel):

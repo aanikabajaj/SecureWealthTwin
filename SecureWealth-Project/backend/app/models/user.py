@@ -11,7 +11,7 @@ from datetime import datetime
 from sqlalchemy import Boolean, DateTime, Enum, Integer, String, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from backend.app.db.database import Base
+from app.db.database import Base
 
 
 class UserRole(str, enum.Enum):

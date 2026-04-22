@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 from web3 import Web3
 from web3.providers.eth_tester import EthereumTesterProvider
 
-from backend.app.config import get_settings
+from app.config import get_settings
 
 logger = logging.getLogger("securewealth.blockchain")
 settings = get_settings()

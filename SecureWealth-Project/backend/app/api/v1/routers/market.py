@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from backend.app.services.ai_service import ai_service
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.user import User
+from app.services.ai_service import ai_service
+from app.middleware.auth_middleware import get_current_user
+from app.models.user import User
 
 router = APIRouter()
 

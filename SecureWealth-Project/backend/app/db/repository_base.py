@@ -10,7 +10,7 @@ from typing import Generic, Type, TypeVar
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.database import Base
+from app.db.database import Base
 
 ModelT = TypeVar("ModelT", bound=Base)  # type: ignore[type-arg]
 

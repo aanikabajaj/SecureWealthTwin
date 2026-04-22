@@ -11,7 +11,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from backend.app.config import get_settings
+from app.config import get_settings
 
 settings = get_settings()
 logging.basicConfig(
@@ -26,10 +26,10 @@ logger = logging.getLogger("securewealth")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Import all models so Alembic / create_all can discover them
-    import backend.app.models  # noqa: F401  (registers all ORM classes)
+    import app.models  # noqa: F401  (registers all ORM classes)
 
     if settings.USE_SQLITE or settings.ENVIRONMENT == "development":
-        from backend.app.db.database import create_all_tables
+        from app.db.database import create_all_tables
         await create_all_tables()
         logger.info("DB tables ensured (dev mode)")
 
@@ -81,15 +81,15 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # ── Routers ───────────────────────────────────────────────────────────────────
 
-from backend.app.api.v1.routers import auth        as auth_router
-from backend.app.api.v1.routers import aggregator  as aggregator_router
-from backend.app.api.v1.routers import assets      as assets_router
-from backend.app.api.v1.routers import networth    as networth_router
-from backend.app.api.v1.routers import audit       as audit_router
-from backend.app.api.v1.routers import advisor     as advisor_router
-from backend.app.api.v1.routers import simulator   as simulator_router
-from backend.app.api.v1.routers import chat        as chat_router
-from backend.app.api.v1.routers import market      as market_router
+from app.api.v1.routers import auth        as auth_router
+from app.api.v1.routers import aggregator  as aggregator_router
+from app.api.v1.routers import assets      as assets_router
+from app.api.v1.routers import networth    as networth_router
+from app.api.v1.routers import audit       as audit_router
+from app.api.v1.routers import advisor     as advisor_router
+from app.api.v1.routers import simulator   as simulator_router
+from app.api.v1.routers import chat        as chat_router
+from app.api.v1.routers import market      as market_router
 
 app.include_router(auth_router.router,        prefix="/api/v1/auth",        tags=["Auth"])
 app.include_router(aggregator_router.router,  prefix="/api/v1/aggregator",  tags=["Account Aggregator"])

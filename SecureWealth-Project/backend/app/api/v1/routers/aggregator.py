@@ -12,17 +12,17 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.config import get_settings
-from backend.app.db.database import get_db
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.aa_consent import ConsentStatus
-from backend.app.models.user import User
-from backend.app.schemas.aa_schemas import (
+from app.config import get_settings
+from app.db.database import get_db
+from app.middleware.auth_middleware import get_current_user
+from app.models.aa_consent import ConsentStatus
+from app.models.user import User
+from app.schemas.aa_schemas import (
     ConsentCreateRequest, ConsentResponse, ConsentStatusUpdateRequest,
     FetchInitiateRequest, FetchStatusResponse, FinancialPictureResponse,
     LinkedAccountResponse,
 )
-from backend.app.services.aa_service import AccountAggregatorService
+from app.services.aa_service import AccountAggregatorService
 
 router   = APIRouter()
 logger   = logging.getLogger(__name__)
@@ -74,7 +74,7 @@ async def get_consent(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    from backend.app.repositories.aa_repository import AAConsentRepository
+    from app.repositories.aa_repository import AAConsentRepository
     repo    = AAConsentRepository(db)
     consent = await repo.get_by_id(consent_id)
     if not consent or consent.user_id != current_user.id:
@@ -128,7 +128,7 @@ async def list_fetches(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    from backend.app.repositories.aa_repository import AAFetchedDataRepository
+    from app.repositories.aa_repository import AAFetchedDataRepository
     repo    = AAFetchedDataRepository(db)
     records = await repo.list_for_user(current_user.id, fi_type=fi_type)
     return [FetchStatusResponse.model_validate(r) for r in records]
@@ -161,7 +161,7 @@ async def list_linked_accounts(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    from backend.app.repositories.aa_repository import AALinkedAccountRepository
+    from app.repositories.aa_repository import AALinkedAccountRepository
     repo     = AALinkedAccountRepository(db)
     accounts = await repo.list_for_user(current_user.id, active_only=active_only)
     return [LinkedAccountResponse.model_validate(a) for a in accounts]

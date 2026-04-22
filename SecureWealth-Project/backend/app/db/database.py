@@ -7,7 +7,7 @@ from __future__ import annotations
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from backend.app.config import get_settings
+from app.config import get_settings
 
 settings = get_settings()
 

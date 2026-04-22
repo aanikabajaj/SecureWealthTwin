@@ -7,16 +7,16 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.database import get_db
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.user import User
-from backend.app.schemas.asset_schemas import (
+from app.db.database import get_db
+from app.middleware.auth_middleware import get_current_user
+from app.models.user import User
+from app.schemas.asset_schemas import (
     AssetSummaryByCategory, PhysicalAssetCreateRequest,
     PhysicalAssetResponse, PhysicalAssetUpdateRequest,
 )
-from backend.app.services.asset_service import PhysicalAssetService
-from backend.app.services.ai_service import ai_service
-from backend.app.services.blockchain_service import blockchain_service
+from app.services.asset_service import PhysicalAssetService
+from app.services.ai_service import ai_service
+from app.services.blockchain_service import blockchain_service
 
 router = APIRouter()
 logger = logging.getLogger("securewealth.assets")

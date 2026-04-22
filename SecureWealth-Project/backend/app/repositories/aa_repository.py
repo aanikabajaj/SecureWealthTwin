@@ -8,8 +8,8 @@ from datetime import datetime
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.repository_base import BaseRepository
-from backend.app.models.aa_consent import (
+from app.db.repository_base import BaseRepository
+from app.models.aa_consent import (
     AAConsent, AAFetchedData, AALinkedAccount, ConsentStatus,
 )
 

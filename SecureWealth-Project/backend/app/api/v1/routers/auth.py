@@ -16,17 +16,17 @@ from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.config import get_settings
-from backend.app.db.database import get_db
-from backend.app.middleware.auth_middleware import (
+from app.config import get_settings
+from app.db.database import get_db
+from app.middleware.auth_middleware import (
     create_access_token,
     create_refresh_token,
     decode_token,
     get_current_user,
 )
-from backend.app.models.user import User, UserRole
-from backend.app.models.wealth_profile import WealthProfile
-from backend.app.services.email_service import email_service
+from app.models.user import User, UserRole
+from app.models.wealth_profile import WealthProfile
+from app.services.email_service import email_service
 
 router   = APIRouter()
 settings = get_settings()

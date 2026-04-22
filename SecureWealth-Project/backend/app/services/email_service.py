@@ -3,7 +3,7 @@ import logging
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from backend.app.config import get_settings
+from app.config import get_settings
 
 logger = logging.getLogger("securewealth.email")
 settings = get_settings()

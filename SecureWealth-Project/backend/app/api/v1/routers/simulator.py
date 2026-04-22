@@ -8,11 +8,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.database import get_db
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.user import User
-from backend.app.services.ai_service import ai_service
-from backend.app.services.asset_service import PhysicalAssetService
+from app.db.database import get_db
+from app.middleware.auth_middleware import get_current_user
+from app.models.user import User
+from app.services.ai_service import ai_service
+from app.services.asset_service import PhysicalAssetService
 
 router = APIRouter()
 

@@ -13,7 +13,7 @@ from decimal import Decimal
 from sqlalchemy import DateTime, Enum, ForeignKey, Numeric, String, Text, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from backend.app.db.database import Base
+from app.db.database import Base
 
 
 class RiskTolerance(str, enum.Enum):

@@ -10,14 +10,14 @@ from decimal import Decimal
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.models.networth_snapshot import NetWorthSnapshot
-from backend.app.models.physical_asset import PhysicalAsset
-from backend.app.models.wealth_profile import WealthProfile
-from backend.app.repositories.aa_repository import AALinkedAccountRepository
-from backend.app.repositories.asset_repository import (
+from app.models.networth_snapshot import NetWorthSnapshot
+from app.models.physical_asset import PhysicalAsset
+from app.models.wealth_profile import WealthProfile
+from app.repositories.aa_repository import AALinkedAccountRepository
+from app.repositories.asset_repository import (
     NetWorthSnapshotRepository, PhysicalAssetRepository,
 )
-from backend.app.schemas.asset_schemas import (
+from app.schemas.asset_schemas import (
     AssetSummaryByCategory, NetWorthRecomputeResponse, NetWorthResponse,
     PhysicalAssetCreateRequest, PhysicalAssetResponse, PhysicalAssetUpdateRequest,
 )
@@ -94,7 +94,7 @@ class PhysicalAssetService:
         await self.repo.soft_retire(asset_id)
 
     async def list_assets(self, user_id: uuid.UUID, category: str | None = None) -> list[PhysicalAssetResponse]:
-        from backend.app.models.physical_asset import AssetCategory
+        from app.models.physical_asset import AssetCategory
         cat    = AssetCategory(category) if category else None
         assets = await self.repo.list_for_user(user_id, current_only=True, category=cat)
         return [self._to_response(a) for a in assets]

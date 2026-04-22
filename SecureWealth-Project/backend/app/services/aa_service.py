@@ -14,15 +14,15 @@ from decimal import Decimal
 from cryptography.fernet import Fernet
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.config import get_settings
-from backend.app.models.aa_consent import (
+from app.config import get_settings
+from app.models.aa_consent import (
     AAConsent, AAFetchedData, AALinkedAccount,
     AccountType, ConsentStatus, FetchStatus,
 )
-from backend.app.repositories.aa_repository import (
+from app.repositories.aa_repository import (
     AAConsentRepository, AAFetchedDataRepository, AALinkedAccountRepository,
 )
-from backend.app.schemas.aa_schemas import (
+from app.schemas.aa_schemas import (
     ConsentCreateRequest, FinancialPictureResponse, LinkedAccountResponse,
 )
 

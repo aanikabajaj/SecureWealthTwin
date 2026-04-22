@@ -13,9 +13,9 @@ from jose import ExpiredSignatureError, JWTError, jwt
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.config import get_settings
-from backend.app.db.database import get_db
-from backend.app.models.user import User
+from app.config import get_settings
+from app.db.database import get_db
+from app.models.user import User
 
 settings  = get_settings()
 _bearer   = HTTPBearer(auto_error=True)
@@ -86,7 +86,7 @@ async def get_current_user(
 
 
 async def get_current_admin(user: User = Depends(get_current_user)) -> User:
-    from backend.app.models.user import UserRole
+    from app.models.user import UserRole
     if user.role != UserRole.ADMIN:
         raise HTTPException(status_code=403, detail="Admin access required")
     return user

@@ -5,11 +5,11 @@ SecureWealth Twin — Net Worth Router.
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from backend.app.db.database import get_db
-from backend.app.middleware.auth_middleware import get_current_user
-from backend.app.models.user import User
-from backend.app.schemas.asset_schemas import NetWorthRecomputeResponse, NetWorthResponse
-from backend.app.services.asset_service import NetWorthService
+from app.db.database import get_db
+from app.middleware.auth_middleware import get_current_user
+from app.models.user import User
+from app.schemas.asset_schemas import NetWorthRecomputeResponse, NetWorthResponse
+from app.services.asset_service import NetWorthService
 
 router = APIRouter()
 

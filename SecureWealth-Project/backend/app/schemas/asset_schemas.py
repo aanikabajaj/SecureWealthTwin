@@ -9,7 +9,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field, model_validator
 
-from backend.app.models.physical_asset import AssetCategory, OwnershipType, ValuationMethod
+from app.models.physical_asset import AssetCategory, OwnershipType, ValuationMethod
 
 
 class PhysicalAssetCreateRequest(BaseModel):

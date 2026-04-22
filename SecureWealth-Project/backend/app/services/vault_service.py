@@ -3,7 +3,7 @@ import base64
 import logging
 from typing import Optional
 from cryptography.fernet import Fernet
-from backend.app.config import get_settings
+from app.config import get_settings
 
 logger = logging.getLogger("securewealth.vault")
 settings = get_settings()
